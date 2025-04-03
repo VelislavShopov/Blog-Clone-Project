@@ -1,0 +1,14 @@
+{% extends 'main_app/base.html' %}
+
+{% block title %}
+    Drafts
+{% endblock %}
+
+{% block main %}
+    {% for draft in drafts %}
+        <div>
+            <h1><a href="{% url 'main_app:post_detail' pk=draft.pk%}">{{ draft.title }}</a></h1>
+            <p>{{ draft.date_posted }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}

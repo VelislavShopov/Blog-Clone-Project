@@ -1,0 +1,16 @@
+{% extends 'main_app/base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block main %}
+    {% for post in posts %}
+        <div>
+            <h1><a href="{% url 'main_app:post_detail' pk=post.pk%}">{{ post.title }}</a></h1>
+            <p>{{ post.date_posted }}</p>
+            <p>Comments: {{ post.comments.count }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
