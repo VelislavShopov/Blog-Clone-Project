@@ -1,0 +1,14 @@
+{% extends 'main_app/base.html' %}
+
+{% block title %}
+    Add Comment
+{% endblock %}
+
+
+{% block main %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Add Comment">
+    </form>
+{% endblock %}

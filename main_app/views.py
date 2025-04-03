@@ -2,8 +2,9 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.messages.api import success
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, FormView, CreateView, DetailView, UpdateView
+from django.views.generic import ListView, FormView, CreateView, DetailView, UpdateView, DeleteView
 
 from main_app.forms import PostForm
 from main_app.models import *
@@ -66,12 +67,29 @@ class PostUpdateView(UpdateView):
     model = Post
     template_name = 'main_app/post_form.html'
     fields = ('title','content')
-    def form_valid(self, form):
-        return redirect('main_app:post_detail', pk=self.object.pk)
 
+    def get_success_url(self):
+        return reverse_lazy('main_app:post_detail',kwargs={'pk':self.object.pk})
+
+class PostDeleteView(DeleteView):
+    model=Post
+    success_url = reverse_lazy('index')
 
 def publish_post(request,pk):
     post = Post.objects.get(pk=pk)
     post.is_published = True
     post.save()
     return redirect('main_app:post_detail', pk=post.pk)
+
+
+class CommentOnPostCreateView(CreateView):
+    model = Comment
+    fields= ('content',)
+    success_url = '/'
+    template_name = 'main_app/add_comment.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.post = Post.objects.get(pk=self.kwargs['post_pk'])
+        form.save()
+        return redirect('main_app:post_detail', pk=self.kwargs['post_pk'])

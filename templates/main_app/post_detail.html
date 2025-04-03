@@ -6,17 +6,31 @@
 
 {% block main %}
     <h1>{{ post.title }}</h1>
+    
+    
     {% if not post.is_published and post.author == user%}
         <form method="post" action="{% url 'main_app:publish_post' pk=post.pk%}">
             {% csrf_token %}
             <input type="submit" value="Publish">
         </form>
     {% endif %}
+    
+    
     <p>{{ post.content }}</p>
-    <form method="post" action="{% url 'main_app:update_post' pk=post.pk%}">
-        {% csrf_token %}
-        <input type="submit" value="Edit">
-    </form>
+    
+    
+    {% if post.author == user %}
+        <form method="post" action="{% url 'main_app:update_post' pk=post.pk%}">
+            {% csrf_token %}
+            <input type="submit" value="Edit">
+        </form>
+        <form method="post" action="{% url 'main_app:delete_post' pk=post.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="Delete">
+        </form>
+    {% endif %}
+    
+    
     {% if post.is_published %}
         <h3>Comments: {{ comments.count }}</h3>
         {% if comments %}
@@ -24,5 +38,11 @@
                 <p>{{ comment.author }}: {{ comment.content }}</p>
             {% endfor %}
         {% endif %}
+        <a href="{% url 'main_app:add_comment' post_pk=post.pk%}">
+            <button>Add Comment</button>
+        </a>
+        
     {% endif %}
+    
+    
 {% endblock %}
