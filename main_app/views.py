@@ -39,7 +39,9 @@ class PostCreateView(CreateView):
     model = Post
     form_class = PostForm
     template_name = 'main_app/post_form.html'
-    success_url = '/'
+
+    def get_success_url(self):
+        return reverse_lazy('main_app:post_detail',kwargs={'pk':self.object.pk})
 
     def form_valid(self, form):
         form.instance.author = self.request.user
