@@ -1,16 +1,23 @@
 {% extends 'main_app/base.html' %}
+{% load static %}
 
 {% block title %}
     Home
 {% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/index_styles.css' %}">
+{% endblock %}
+
 
 {% block main %}
-    {% for post in posts %}
-        <div>
-            <h1><a href="{% url 'main_app:post_detail' pk=post.pk%}">{{ post.title }}</a></h1>
-            <p>{{ post.date_posted }}</p>
-            <p>Comments: {{ post.comments.count }}</p>
-        </div>
-    {% endfor %}
+    <section>
+        {% for post in posts %}
+            <div class="post_container">
+                <h1><a href="{% url 'main_app:post_detail' pk=post.pk%}">{{ post.title }}</a></h1>
+                <p>{{ post.date_posted }}</p>
+                <p>Comments: {{ post.comments.count }}</p>
+            </div>
+        {% endfor %}
+    </section>
 {% endblock %}

@@ -24,6 +24,7 @@ urlpatterns = [
     path('', views.HomePageView.as_view(), name='index'),
     path('login/', views.LoginFormView.as_view(), name='login'),
     path('logout/',views.LogOutView.as_view(), name='logout'),
+    path('register/',views.UserCreateView.as_view(), name='register'),
 
     path('post/',include('main_app.urls')),
 ]

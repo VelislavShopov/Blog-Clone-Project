@@ -1,0 +1,12 @@
+section{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 10px 0;
+}
+
+
+
+.post_container h1 a{
+    text-decoration: none;
+    color: #946338
+}

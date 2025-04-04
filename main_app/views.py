@@ -1,12 +1,13 @@
 from django.contrib.auth import login, logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.messages.api import success
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, FormView, CreateView, DetailView, UpdateView, DeleteView
 
-from main_app.forms import PostForm
+from main_app.forms import PostForm, CustomUserCreationForm
 from main_app.models import *
 
 # Create your views here.
@@ -93,3 +94,16 @@ class CommentOnPostCreateView(CreateView):
         form.instance.post = Post.objects.get(pk=self.kwargs['post_pk'])
         form.save()
         return redirect('main_app:post_detail', pk=self.kwargs['post_pk'])
+
+
+class UserCreateView(CreateView):
+    model = User
+    form_class = UserCreationForm
+    template_name = 'main_app/user_form.html'
+    success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        user = form.save()
+        login(self.request, user)
+        return HttpResponseRedirect(self.success_url)

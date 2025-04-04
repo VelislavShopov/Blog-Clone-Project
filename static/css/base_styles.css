@@ -1,0 +1,48 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    background: #1759D4;
+    font-size: larger;
+    padding-inline: 10em;
+}
+
+nav .container{
+    display: flex;
+    gap: 1em;
+
+}
+nav .container div{
+    padding: 20px
+}
+
+nav a{
+    text-decoration: none;
+    color: #E5ECE9;
+    height: 100%;
+}
+
+nav .container div:hover{
+    background: #799ad7;
+}
+
+main{
+    margin:0 10em;
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding:20px 0;
+    background-color: #1759D4;
+    color:#E5ECE9;
+    text-align: center;
+}
+

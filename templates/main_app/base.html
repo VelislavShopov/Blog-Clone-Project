@@ -1,29 +1,44 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base_styles.css' %}">
+    {% block extra_css %}
+    {% endblock %}
 </head>
 <body>
-    <nav>
-        <div><a href="{% url 'index' %}">My Tech blog</a></div>
-        <div><a>About</a></div>
-        <div><a>Github</a></div>
-        <div><a>LinkedIn</a></div>
-        {% if user.is_authenticated %}
 
-            <div><a href="{% url 'main_app:create_post' %}">New Post</a></div>
-            <div><a href="{% url 'main_app:drafts' pk=user.pk%}">Drafts</a></div>
-            <div><a href="{% url 'logout' %}">Log out</a></div>
-            <div><a></a></div>
-        {% else %}
-            <div><a href="{% url 'login' %}">LOGIN</a></div>
-        {% endif %}
+    <nav>
+        <div class="container">
+            <div><a href="{% url 'index' %}">My Tech blog</a></div>
+            <div><a>About</a></div>
+            <div><a>Github</a></div>
+            <div><a>LinkedIn</a></div>
+        </div>
+        <div class="container">
+            {% if user.is_authenticated %}
+
+                <div><a href="{% url 'main_app:create_post' %}">New Post</a></div>
+                <div><a href="{% url 'main_app:drafts' pk=user.pk%}">Drafts</a></div>
+                <div><a href="{% url 'logout' %}">Log out</a></div>
+                <div><a></a></div>
+            {% else %}
+                <div><a href="{% url 'login' %}">LOGIN</a></div>
+                <div><a href="{% url 'register' %}">Register</a></div>
+            {% endif %}
+        </div>
 
     </nav>
     <main>
         {% block main %}
         {% endblock %}
     </main>
+    <footer>
+        <div>
+            Made by: Velislav Shopov
+        </div>
+    </footer>
 </body>
 </html>
